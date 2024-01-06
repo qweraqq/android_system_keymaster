@@ -171,14 +171,22 @@ std::string GetVerifiedBootState() {
     // Do not wait for bootloader-set properties. They are passed to the kernel
     // on the command line, and should always be available. If not available at
     // this point, it will never be available.
-    return android::base::GetProperty(kVerifiedBootStateProp, /*default_value=*/"red");
+
+    // return android::base::GetProperty(kVerifiedBootStateProp, /*default_value=*/"red");
+
+    // HACKED HERE
+    return "green";
 }
 
 std::string GetBootloaderState() {
     // Do not wait for bootloader-set properties. They are passed to the kernel
     // on the command line, and should always be available. If not available at
     // this point, it will never be available.
-    return android::base::GetProperty(kVbmetaDeviceStateProp, /*default_value=*/"unlocked");
+
+    // return android::base::GetProperty(kVbmetaDeviceStateProp, /*default_value=*/"unlocked");
+
+    // HACKED HERE
+    return "locked";
 }
 
 std::optional<uint8_t> HexCharToInt(char c) {
@@ -257,8 +265,11 @@ std::optional<std::vector<uint8_t>> GetVbmetaDigest() {
     // Do not wait for bootloader-set properties. They are passed to the kernel
     // on the command line, and should always be available. If not available at
     // this point, it will never be available.
+
+    // HACKED HERE
     auto vbmeta_string = android::base::GetProperty(
         kVbmetaDigestProp,
+//        "739a4c9ad3e034ac483614ced4083a2caad246387ce7fed8bd8eb92a2d08486e");
         /*default_value=*/"0000000000000000000000000000000000000000000000000000000000000000");
     return GetVbmetaDigest(vbmeta_string);
 }

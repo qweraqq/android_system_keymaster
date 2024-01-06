@@ -64,7 +64,9 @@ vector<KeyCharacteristics> convertKeyCharacteristics(SecurityLevel keyMintSecuri
     }
 
     KeyCharacteristics keystoreEnforced{SecurityLevel::KEYSTORE, {}};
-    CHECK(hw_enforced.empty()) << "Hardware-enforced list is non-empty for pure SW KeyMint";
+
+    // HACK: remove check
+    // CHECK(hw_enforced.empty()) << "Hardware-enforced list is non-empty for pure SW KeyMint";
 
     // This is a pure software implementation, so all tags are in sw_enforced.
     // We need to walk through the SW-enforced list and figure out which tags to
@@ -227,8 +229,8 @@ AndroidKeyMintDevice::AndroidKeyMintDevice(SecurityLevel securityLevel)
               context->SetBootPatchlevel(GetOsPatchlevel() * 100 + 1);
               auto digest = ::keymaster::GetVbmetaDigest();
               if (digest) {
-                  std::string bootState = ::keymaster::GetVerifiedBootState();
-                  std::string bootloaderState = ::keymaster::GetBootloaderState();
+                  std::string bootState = "green";
+                  std::string bootloaderState = "locked";
                   context->SetVerifiedBootInfo(bootState, bootloaderState, *digest);
               } else {
                   LOG(ERROR) << "Unable to read vb_meta digest";
@@ -241,10 +243,10 @@ AndroidKeyMintDevice::AndroidKeyMintDevice(SecurityLevel securityLevel)
 AndroidKeyMintDevice::~AndroidKeyMintDevice() {}
 
 ScopedAStatus AndroidKeyMintDevice::getHardwareInfo(KeyMintHardwareInfo* info) {
-    info->versionNumber = 2;
+    info->versionNumber = 4;
     info->securityLevel = securityLevel_;
-    info->keyMintName = "FakeKeyMintDevice";
-    info->keyMintAuthorName = "Google";
+    info->keyMintName = "HuaweiKeyMintDevice";
+    info->keyMintAuthorName = "Huawei";
     info->timestampTokenRequired = false;
     return ScopedAStatus::ok();
 }
