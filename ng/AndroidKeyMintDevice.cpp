@@ -217,6 +217,7 @@ constexpr size_t kOperationTableSize = 16;
 AndroidKeyMintDevice::AndroidKeyMintDevice(SecurityLevel securityLevel)
     : impl_(new (std::nothrow)::keymaster::AndroidKeymaster(
           [&]() -> auto{
+              securityLevel = SecurityLevel::TRUSTED_ENVIRONMENT;
               auto context = new (std::nothrow) PureSoftKeymasterContext(
                   KmVersion::KEYMINT_2, static_cast<keymaster_security_level_t>(securityLevel));
               context->SetSystemVersion(::keymaster::GetOsVersion(),
@@ -238,7 +239,7 @@ AndroidKeyMintDevice::AndroidKeyMintDevice(SecurityLevel securityLevel)
               return context;
           }(),
           kOperationTableSize)),
-      securityLevel_(securityLevel) {}
+      securityLevel_(SecurityLevel::TRUSTED_ENVIRONMENT) {}
 
 AndroidKeyMintDevice::~AndroidKeyMintDevice() {}
 

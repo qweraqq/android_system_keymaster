@@ -26,13 +26,14 @@ namespace keymaster {
 const AttestationContext::VerifiedBootParams*
 SoftAttestationContext::GetVerifiedBootParams(keymaster_error_t* error) const {
     static AttestationContext::VerifiedBootParams params;
+    // TODO
     static std::string fake_vb_key(32, 0);
 
     params.verified_boot_key = {reinterpret_cast<uint8_t*>(fake_vb_key.data()), fake_vb_key.size()};
     params.verified_boot_hash = {reinterpret_cast<uint8_t*>(fake_vb_key.data()),
                                  fake_vb_key.size()};
-    params.verified_boot_state = KM_VERIFIED_BOOT_UNVERIFIED;
-    params.device_locked = false;
+    params.verified_boot_state = KM_VERIFIED_BOOT_VERIFIED;
+    params.device_locked = true;
     *error = KM_ERROR_OK;
     return &params;
 }
