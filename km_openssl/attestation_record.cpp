@@ -1034,6 +1034,7 @@ keymaster_error_t build_attestation_record(const AuthorizationSet& attestation_p
     }
     sw_enforced.push_back(TAG_ATTESTATION_APPLICATION_ID, attestation_app_id);
 
+    // TODO: marked by xx
     error = context.VerifyAndCopyDeviceIds(
         attestation_params,
         context.GetSecurityLevel() == KM_SECURITY_LEVEL_SOFTWARE ? &sw_enforced : &tee_enforced);

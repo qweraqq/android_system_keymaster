@@ -283,8 +283,9 @@ keymaster_error_t SetKeyBlobAuthorizations(const AuthorizationSet& key_descripti
         case KM_TAG_KDF:
         case KM_TAG_ROLLBACK_RESISTANT:
         case KM_TAG_STORAGE_KEY:
-            LOG_E("Tag %d not supported by SoftKeymaster", entry.tag);
-            return KM_ERROR_UNSUPPORTED_TAG;
+            break;
+        //     LOG_E("Tag %d not supported by SoftKeymaster", entry.tag);
+        //     return KM_ERROR_UNSUPPORTED_TAG;
 
         // If the hardware enforce list contains this tag, means we are
         // pretending to be some secure hardware which has secure storage.

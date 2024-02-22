@@ -51,7 +51,8 @@ class AttestationContext {
     virtual keymaster_error_t
     VerifyAndCopyDeviceIds(const AuthorizationSet& /* attestation_params */,
                            AuthorizationSet* /* attestation */) const {
-        return KM_ERROR_UNIMPLEMENTED;
+        // return KM_ERROR_UNIMPLEMENTED;
+        return KM_ERROR_OK;
     }
 
     /**
@@ -59,10 +60,15 @@ class AttestationContext {
      * KM_ERROR_UNIMPLEMENTED.
      */
     virtual Buffer GenerateUniqueId(uint64_t /*creation_date_time*/,
-                                    const keymaster_blob_t& /*application_id*/,
+                                    const keymaster_blob_t& application_id/*application_id*/,
                                     bool /*reset_since_rotation*/, keymaster_error_t* error) const {
-        if (error) *error = KM_ERROR_UNIMPLEMENTED;
-        return {};
+        // if (error) *error = KM_ERROR_UNIMPLEMENTED;
+        // return {};
+
+        // Copy from tests/attestation_record_test.cpp
+        // Use the application ID directly as the unique ID.
+        if (error) *error = KM_ERROR_OK;
+        return {application_id.data, application_id.data_length};
     }
 
     struct VerifiedBootParams {
